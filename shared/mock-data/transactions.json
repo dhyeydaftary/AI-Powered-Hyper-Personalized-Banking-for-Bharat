@@ -1,0 +1,32 @@
+[
+  {
+    "transaction_id": "TX1001",
+    "customer_id": "C1001",
+    "date": "2026-06-01",
+    "amount": 75000,
+    "type": "CREDIT",
+    "category": "SALARY",
+    "description": "Monthly salary",
+    "merchant": "Synthetic Employer"
+  },
+  {
+    "transaction_id": "TX1002",
+    "customer_id": "C1001",
+    "date": "2026-06-03",
+    "amount": 9000,
+    "type": "DEBIT",
+    "category": "EMI",
+    "description": "Home loan EMI",
+    "merchant": "Synthetic Bank"
+  },
+  {
+    "transaction_id": "TX1003",
+    "customer_id": "C1001",
+    "date": "2026-06-05",
+    "amount": 3500,
+    "type": "DEBIT",
+    "category": "GROCERIES",
+    "description": "Grocery purchase",
+    "merchant": "Synthetic Mart"
+  }
+]

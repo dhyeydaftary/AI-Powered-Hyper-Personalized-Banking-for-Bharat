@@ -1,0 +1,9 @@
+{
+  "loan_id": "L1001",
+  "customer_id": "C1001",
+  "principal": 250000,
+  "outstanding": 180000,
+  "monthly_emi": 9000,
+  "annual_interest_rate": 11.5,
+  "remaining_months": 24
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FinancialContext",
+  "type": "object",
+  "required": [
+    "customer_id",
+    "emi_to_income_ratio",
+    "savings_rate",
+    "expense_to_income_ratio",
+    "confidence",
+    "history_months"
+  ],
+  "properties": {
+    "customer_id": {"type": "string"},
+    "emi_to_income_ratio": {"type": ["number", "null"]},
+    "savings_rate": {"type": ["number", "null"]},
+    "expense_to_income_ratio": {"type": ["number", "null"]},
+    "balance_trend": {"type": ["string", "null"]},
+    "income_stability": {"type": ["number", "null"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "history_months": {"type": "integer", "minimum": 0}
+  }
+}

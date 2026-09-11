@@ -1,0 +1,12 @@
+{
+  "customer_id": "C1001",
+  "name": "Aarav Patel",
+  "age": 32,
+  "preferred_language": "en",
+  "monthly_income": 75000,
+  "consent": {
+    "behavioral_trend_analysis": true,
+    "anomaly_analysis": true,
+    "vernacular_assistance": true
+  }
+}
