@@ -9,10 +9,23 @@
  * Uses ONLY synthetic data. No real financial identities.
  */
 
-import { PrismaClient, TransactionType, TransactionCategory } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import customerData from '../../shared/mock-data/customer.json';
 import loanData from '../../shared/mock-data/loan.json';
 import transactionsData from '../../shared/mock-data/transactions.json';
+
+type TransactionType = 'CREDIT' | 'DEBIT';
+type TransactionCategory =
+  | 'SALARY'
+  | 'EMI'
+  | 'GROCERIES'
+  | 'RENT'
+  | 'UTILITIES'
+  | 'SHOPPING'
+  | 'TRAVEL'
+  | 'HEALTH'
+  | 'TRANSFER'
+  | 'OTHER';
 
 const prisma = new PrismaClient();
 
