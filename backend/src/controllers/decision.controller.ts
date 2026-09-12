@@ -4,7 +4,8 @@ import { successResponse } from '../utils/response';
 
 export async function getDecision(req: Request, res: Response, next: NextFunction) {
   try {
-    const decision = await getLatestDecision(req.params.customerId);
+    const customerId = Array.isArray(req.params.customerId) ? req.params.customerId[0] : req.params.customerId;
+    const decision = await getLatestDecision(customerId);
     successResponse(res, decision);
   } catch (err) {
     next(err);

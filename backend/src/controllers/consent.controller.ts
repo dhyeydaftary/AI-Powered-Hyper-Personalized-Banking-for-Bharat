@@ -4,7 +4,8 @@ import { successResponse } from '../utils/response';
 
 export async function getConsent(req: Request, res: Response, next: NextFunction) {
   try {
-    const consent = await consentService.getConsent(req.params.customerId);
+    const customerId = Array.isArray(req.params.customerId) ? req.params.customerId[0] : req.params.customerId;
+    const consent = await consentService.getConsent(customerId);
     successResponse(res, consent);
   } catch (err) {
     next(err);
@@ -13,7 +14,8 @@ export async function getConsent(req: Request, res: Response, next: NextFunction
 
 export async function updateConsent(req: Request, res: Response, next: NextFunction) {
   try {
-    const consent = await consentService.updateConsent(req.params.customerId, req.body);
+    const customerId = Array.isArray(req.params.customerId) ? req.params.customerId[0] : req.params.customerId;
+    const consent = await consentService.updateConsent(customerId, req.body);
     successResponse(res, consent);
   } catch (err) {
     next(err);

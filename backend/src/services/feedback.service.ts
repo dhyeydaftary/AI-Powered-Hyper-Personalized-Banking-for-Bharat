@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client';
 import prisma from '../config/database';
 import { ensureCustomerExists } from './customer.service';
 
@@ -30,7 +31,7 @@ export async function createFeedback(data: {
       customer_id: data.customer_id,
       decision_id: data.decision_id,
       event_type: data.event_type,
-      metadata: data.metadata,
+      metadata: data.metadata as Prisma.InputJsonValue,
     },
   });
 

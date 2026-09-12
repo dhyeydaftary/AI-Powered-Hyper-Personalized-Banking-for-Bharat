@@ -4,7 +4,8 @@ import { successResponse } from '../utils/response';
 
 export async function simulate(req: Request, res: Response, next: NextFunction) {
   try {
-    const result = await runSimulation(req.params.customerId, req.body.loan);
+    const customerId = Array.isArray(req.params.customerId) ? req.params.customerId[0] : req.params.customerId;
+    const result = await runSimulation(customerId, req.body.loan);
     successResponse(res, result);
   } catch (err) {
     next(err);
