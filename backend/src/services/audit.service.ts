@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import prisma from '../config/database';
 import { ensureCustomerExists } from './customer.service';
 
@@ -24,8 +23,8 @@ export async function createAuditEntry(data: {
       decision: data.decision,
       reason_codes: data.reason_codes,
       confidence: data.confidence,
-      signals: (data.signals as Prisma.InputJsonValue) ?? undefined,
-      action: (data.action as Prisma.InputJsonValue) ?? undefined,
+      signals: (data.signals as any) ?? undefined,
+      action: (data.action as any) ?? undefined,
       policy_version: data.policy_version,
     },
   });

@@ -1,4 +1,3 @@
-import { Prisma } from '@prisma/client';
 import prisma from '../config/database';
 import { ensureCustomerExists } from './customer.service';
 
@@ -45,8 +44,8 @@ export async function persistDecision(data: {
       decision: data.decision,
       confidence: data.confidence,
       reason_codes: data.reason_codes,
-      signals: (data.signals as Prisma.InputJsonValue) ?? undefined,
-      action: (data.action as Prisma.InputJsonValue) ?? undefined,
+      signals: (data.signals as any) ?? undefined,
+      action: (data.action as any) ?? undefined,
       policy_version: data.policy_version,
       timestamp: new Date(data.timestamp),
     },
