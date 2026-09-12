@@ -50,7 +50,7 @@ export async function getAuditLogsByCustomer(
   ]);
 
   return {
-    entries: entries.map((e) => ({
+    entries: entries.map((e: any) => ({
       id: e.id,
       decision_id: e.decision_id,
       customer_id: e.customer_id,

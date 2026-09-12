@@ -21,7 +21,7 @@ export async function getTransactionsByCustomer(
   ]);
 
   return {
-    transactions: transactions.map((tx) => ({
+    transactions: transactions.map((tx: any) => ({
       transaction_id: tx.transaction_id,
       customer_id: tx.customer_id,
       date: tx.date.toISOString().split('T')[0],
@@ -42,7 +42,7 @@ export async function getAllTransactionsForAnalysis(customerId: string) {
     orderBy: { date: 'asc' },
   });
 
-  return transactions.map((tx) => ({
+  return transactions.map((tx: any) => ({
     transaction_id: tx.transaction_id,
     customer_id: tx.customer_id,
     date: tx.date.toISOString().split('T')[0],

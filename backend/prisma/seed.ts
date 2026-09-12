@@ -485,7 +485,7 @@ async function main() {
 }
 
 main()
-  .catch((e) => {
+  .catch((e: unknown) => {
     console.error('❌ Seed failed:', e);
     process.exit(1);
   })
