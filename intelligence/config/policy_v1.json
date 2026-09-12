@@ -1,0 +1,35 @@
+{
+  "policy_version": "v1.0",
+  "priority_order": [
+    "VERIFY",
+    "INTERVENE",
+    "RECOMMEND",
+    "NO_ACTION"
+  ],
+  "stress_thresholds": {
+    "emi_to_income_high": 0.35,
+    "savings_rate_low": 0.10,
+    "expense_to_income_high": 0.75
+  },
+  "healthy_thresholds": {
+    "emi_to_income_max": 0.35,
+    "savings_rate_min": 0.15,
+    "expense_to_income_max": 0.70,
+    "income_stability_min": 0.70
+  },
+  "anomaly_thresholds": {
+    "single_tx_to_income_ratio": 0.80,
+    "z_score_threshold": 3.0,
+    "min_tx_count_for_stats": 5
+  },
+  "cold_start": {
+    "min_history_months": 2,
+    "min_transactions": 3,
+    "cold_start_confidence_cap": 0.45
+  },
+  "confidence_weights": {
+    "history_weight": 0.40,
+    "completeness_weight": 0.30,
+    "stability_weight": 0.30
+  }
+}
