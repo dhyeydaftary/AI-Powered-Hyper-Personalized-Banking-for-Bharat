@@ -542,6 +542,39 @@ describe('Prompt injection defense', () => {
   });
 });
 
+// ─── Expanded Customer Scenarios ────────────────────────
+
+describe('Expanded Customer Scenarios', () => {
+  it('C1003 (Priya Nair) should yield RECOMMEND for disciplined saver', async () => {
+    const res = await request(app)
+      .post(`${BASE}/customers/C1003/analyze`)
+      .send({});
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.decision.decision).toBe('RECOMMEND');
+  });
+
+  it('C1004 (Rohan Deshmukh) should yield INTERVENE due to high EMI burden', async () => {
+    const res = await request(app)
+      .post(`${BASE}/customers/C1004/analyze`)
+      .send({});
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.decision.decision).toBe('INTERVENE');
+    expect(res.body.data.decision.reason_codes).toContain('HIGH_EMI_BURDEN');
+  });
+
+  it('C1005 (Sana Iqbal) should yield VERIFY due to isolated large appliance purchase', async () => {
+    const res = await request(app)
+      .post(`${BASE}/customers/C1005/analyze`)
+      .send({});
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.decision.decision).toBe('VERIFY');
+    expect(res.body.data.decision.reason_codes).toContain('UNUSUAL_TRANSACTION');
+  });
+});
+
 // ─── Standard Response Format ─────────────────────────────
 
 describe('Standard API response format', () => {
