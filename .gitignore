@@ -1,10 +1,17 @@
-node_modules/
-dist/
-.env
-.env.local
-.env.*.local
-coverage/
-*.log
+# OS Files
 .DS_Store
+Thumbs.db
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
 .claude/
 DESIGN.md
+
+# Vitest / Coverage
+coverage/
+**/.vitest/

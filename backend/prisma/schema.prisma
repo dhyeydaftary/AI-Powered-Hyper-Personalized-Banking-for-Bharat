@@ -1,0 +1,177 @@
+// Prisma schema for HackOut'26 — AI-Powered Hyper-Personalized Banking for Bharat
+// Follows shared contracts: docs/DATA_CONTRACT.md, shared/schemas/
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums ──────────────────────────────────────────────────
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
+enum TransactionCategory {
+  SALARY
+  EMI
+  GROCERIES
+  RENT
+  UTILITIES
+  SHOPPING
+  TRAVEL
+  HEALTH
+  TRANSFER
+  OTHER
+}
+
+enum DecisionType {
+  RECOMMEND
+  INTERVENE
+  VERIFY
+  NO_ACTION
+}
+
+enum FeedbackEventType {
+  ENGAGED
+  IGNORED
+  FOLLOW_UP
+  DISMISSED
+}
+
+// ─── Customer ───────────────────────────────────────────────
+
+model Customer {
+  customer_id        String   @id
+  name               String
+  age                Int
+  preferred_language String   @default("en")
+  monthly_income     Decimal  @db.Decimal(12, 2)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+
+  transactions Transaction[]
+  loans        Loan[]
+  consent      Consent?
+  decisions    Decision[]
+  feedbacks    Feedback[]
+
+  @@index([customer_id])
+}
+
+// ─── Transaction ────────────────────────────────────────────
+
+model Transaction {
+  transaction_id String              @id
+  customer_id    String
+  date           DateTime            @db.Date
+  amount         Decimal             @db.Decimal(12, 2)
+  type           TransactionType
+  category       TransactionCategory
+  description    String
+  merchant       String
+  created_at     DateTime            @default(now())
+
+  customer Customer @relation(fields: [customer_id], references: [customer_id])
+
+  @@index([customer_id])
+  @@index([date])
+}
+
+// ─── Loan ───────────────────────────────────────────────────
+
+model Loan {
+  loan_id             String   @id
+  customer_id         String
+  principal           Decimal  @db.Decimal(12, 2)
+  outstanding         Decimal  @db.Decimal(12, 2)
+  monthly_emi         Decimal  @db.Decimal(12, 2)
+  annual_interest_rate Decimal @db.Decimal(5, 2)
+  remaining_months    Int
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  customer Customer @relation(fields: [customer_id], references: [customer_id])
+
+  @@index([customer_id])
+}
+
+// ─── Consent ────────────────────────────────────────────────
+
+model Consent {
+  id                        String   @id @default(uuid())
+  customer_id               String   @unique
+  behavioral_trend_analysis Boolean  @default(true)
+  anomaly_analysis          Boolean  @default(true)
+  vernacular_assistance     Boolean  @default(true)
+  created_at                DateTime @default(now())
+  updated_at                DateTime @updatedAt
+
+  customer Customer @relation(fields: [customer_id], references: [customer_id])
+}
+
+// ─── Decision ───────────────────────────────────────────────
+
+model Decision {
+  decision_id    String       @id
+  customer_id    String
+  decision       DecisionType
+  confidence     Float
+  reason_codes   Json         // string[]
+  signals        Json?        // Record<string, unknown> | null
+  action         Json?        // Record<string, unknown> | null
+  policy_version String
+  timestamp      DateTime
+  created_at     DateTime     @default(now())
+
+  customer  Customer   @relation(fields: [customer_id], references: [customer_id])
+  auditLogs AuditLog[]
+  feedbacks Feedback[]
+
+  @@index([customer_id])
+  @@index([timestamp])
+}
+
+// ─── Audit Log ──────────────────────────────────────────────
+// Append-only. Never update or delete historical audit entries.
+
+model AuditLog {
+  id              String       @id @default(uuid())
+  decision_id     String
+  customer_id     String
+  decision        DecisionType
+  reason_codes    Json         // string[]
+  confidence      Float
+  signals         Json?
+  action          Json?
+  policy_version  String
+  audit_timestamp DateTime     @default(now())
+
+  decisionRecord Decision @relation(fields: [decision_id], references: [decision_id])
+
+  @@index([customer_id])
+  @@index([decision_id])
+  @@index([audit_timestamp])
+}
+
+// ─── Feedback ───────────────────────────────────────────────
+
+model Feedback {
+  id          String            @id @default(uuid())
+  customer_id String
+  decision_id String?
+  event_type  FeedbackEventType
+  metadata    Json?
+  created_at  DateTime          @default(now())
+
+  customer       Customer  @relation(fields: [customer_id], references: [customer_id])
+  decisionRecord Decision? @relation(fields: [decision_id], references: [decision_id])
+
+  @@index([customer_id])
+  @@index([decision_id])
+}
