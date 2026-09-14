@@ -1,17 +1,43 @@
-# OS Files
-.DS_Store
-Thumbs.db
+# Environment files
+**/.env
+**/.env.local
+**/.env.*.local
+!**/.env.example
 
-# IDE Files
-.vscode/
-.idea/
-*.swp
-*.swo
+# Dependencies
+**/node_modules/
 
-# Claude Code
-.claude/
-DESIGN.md
-
-# Vitest / Coverage
-coverage/
+# Build / cache output
+**/dist/
+**/build/
+**/.vite/
 **/.vitest/
+**/coverage/
+**/*.tsbuildinfo
+
+# Python (intelligence/)
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.pytest_cache/
+**/venv/
+**/.venv/
+**/.coverage
+**/htmlcov/
+
+# OS files
+**/.DS_Store
+**/Thumbs.db
+
+# IDE files
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+
+# Logs
+**/*.log
+
+# Claude Code — intentionally excluded from this repo, root only
+/.claude/
+/DESIGN.md
